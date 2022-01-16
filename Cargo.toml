@@ -1,0 +1,33 @@
+[package]
+name = "raytracing"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sdl2 = { version = "0.35.1", features = ["unsafe_textures", "image"] }
+rand = "0.8.4"
+nalgebra-glm = "0.16.0"
+stb = "0.3.2"
+
+[profile.release]
+opt-level = 3
+lto = 'fat'
+codegen-units = 1
+panic = 'abort'
+
+[profile.prerelease]
+inherits = 'release'
+debug = true
+opt-level = 3
+codegen-units = 16
+overflow-checks = false
+lto = false
+panic = 'unwind'
+
+[lib]
+name = "raytracing"
+path = "src/raytracing/lib.rs"
+
+[[bin]]
+name = "client"
+path ="src/client/main.rs"

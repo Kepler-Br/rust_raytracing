@@ -2,7 +2,7 @@ use std::cell::RefCell;
 use std::rc::Rc;
 
 use nalgebra_glm::{Vec2, Vec3};
-use rand::{Rng, thread_rng};
+use rand::{thread_rng, Rng};
 
 use crate::misc::rand_gen::{RandGen, RandGenRc};
 

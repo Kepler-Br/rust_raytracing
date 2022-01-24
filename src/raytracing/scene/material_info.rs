@@ -11,8 +11,8 @@ pub trait MaterialInfoClone {
 }
 
 impl<T> MaterialInfoClone for T
-    where
-        T: MaterialInfo + Clone + 'static,
+where
+    T: MaterialInfo + Clone + 'static,
 {
     fn clone_box(&self) -> Box<dyn MaterialInfo> {
         Box::new(self.clone())

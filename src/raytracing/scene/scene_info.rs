@@ -31,8 +31,8 @@ unsafe impl Send for SceneInfo {}
 
 impl SceneInfo {
     pub fn new<T>(rand_producer: T) -> Self
-        where
-            T: Fn() -> RandGenRc + Send + 'static,
+    where
+        T: Fn() -> RandGenRc + Send + 'static,
     {
         return Self {
             camera: Option::None,

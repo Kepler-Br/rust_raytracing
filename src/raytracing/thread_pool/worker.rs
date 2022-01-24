@@ -1,9 +1,9 @@
-use std::sync::{Arc, mpsc, Mutex};
+use std::sync::{mpsc, Arc, Mutex};
 use std::thread;
 use std::thread::JoinHandle;
 
 use nalgebra_glm::IVec2;
-use rand::{Rng, thread_rng};
+use rand::{thread_rng, Rng};
 
 use crate::misc::tracer::Tracer;
 use crate::scene::scene_info::SceneInfo;

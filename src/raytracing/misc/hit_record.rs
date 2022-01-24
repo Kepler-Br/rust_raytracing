@@ -12,13 +12,19 @@ pub struct HitRecord {
 }
 
 impl HitRecord {
-    pub fn new(point: Vec3, normal: Vec3, distance: f32, is_front_face: bool, material: MaterialRc) -> Self {
+    pub fn new(
+        point: Vec3,
+        normal: Vec3,
+        distance: f32,
+        is_front_face: bool,
+        material: MaterialRc,
+    ) -> Self {
         return Self {
             point,
             normal,
             distance,
             material: Option::Some(material),
-            is_front_face
+            is_front_face,
         };
     }
 

@@ -13,16 +13,18 @@ use crate::mainloop::states::raytracing_state::RaytracingState;
 mod mainloop;
 
 pub fn main() {
-    // TODO: Add names to materials
-    // TODO: Impl Send for SceneInfo
-
     let resolution = IVec2::new(800, 600);
     let tracer_resolution = resolution;
 
     let scene_info = cornell_box(resolution);
 
     let mut mainloop = DefaultMainLoopBuilder::new()
-        .state(RaytracingState::new(scene_info, tracer_resolution))
+        .state(RaytracingState::new(
+            scene_info,
+            tracer_resolution,
+            8,
+            Option::Some("result.ppm"),
+        ))
         .title("Raytracing")
         .resolution(resolution.x as u32, resolution.y as u32)
         .max_fps(30)

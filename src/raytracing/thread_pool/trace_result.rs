@@ -9,10 +9,7 @@ unsafe impl Send for TraceResult {}
 
 impl TraceResult {
     pub fn new(image: DefaultImageBuffer, samples: u64) -> Self {
-        return Self {
-            image,
-            samples,
-        };
+        return Self { image, samples };
     }
 }
 

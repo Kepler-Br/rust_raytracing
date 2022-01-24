@@ -1,6 +1,6 @@
 use std::mem::swap;
 
-use nalgebra_glm::{lerp, Vec3, Vec4};
+use nalgebra_glm::{lerp, IVec3, Vec3, Vec4};
 
 pub fn blackbody_blender(t: f32) -> Vec3 {
     const TABLE_G: [Vec3; 6] = [
@@ -141,6 +141,14 @@ pub fn blackbody(temperature: f32) -> Vec3 {
 /// returns: Color converted to u8
 pub fn f32_to_u8(value: f32) -> u8 {
     return (value.clamp(0.0, 1.0) * 255.0) as u8;
+}
+
+pub fn vec3_to_ivec3(value: &Vec3) -> IVec3 {
+    return IVec3::new(
+        (value.x.clamp(0.0, 1.0) * 255.0) as i32,
+        (value.y.clamp(0.0, 1.0) * 255.0) as i32,
+        (value.z.clamp(0.0, 1.0) * 255.0) as i32,
+    );
 }
 
 pub fn hsl_to_rgb(hsl: &Vec3) -> Vec3 {

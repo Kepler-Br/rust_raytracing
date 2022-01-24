@@ -23,13 +23,13 @@ impl XyRectInfo {
         };
     }
 
-    pub fn square_boxed(name: &str, material_name: &str, position: Vec3, edge_length: f32) -> Box<Self> {
-        return Box::new(Self::square_new(
-            name,
-            material_name,
-            position,
-            edge_length,
-        ));
+    pub fn square_boxed(
+        name: &str,
+        material_name: &str,
+        position: Vec3,
+        edge_length: f32,
+    ) -> Box<Self> {
+        return Box::new(Self::square_new(name, material_name, position, edge_length));
     }
 }
 

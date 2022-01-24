@@ -71,14 +71,32 @@ impl Hittable for Triangle {
     fn bounding_box(&self) -> Option<Aabb> {
         return Option::Some(Aabb::new(
             Vec3::new(
-                f32::min(f32::min(self.point_one.x, self.point_two.x), self.point_three.x),
-                f32::min(f32::min(self.point_one.y, self.point_two.y), self.point_three.y),
-                f32::min(f32::min(self.point_one.z, self.point_two.z), self.point_three.z),
+                f32::min(
+                    f32::min(self.point_one.x, self.point_two.x),
+                    self.point_three.x,
+                ),
+                f32::min(
+                    f32::min(self.point_one.y, self.point_two.y),
+                    self.point_three.y,
+                ),
+                f32::min(
+                    f32::min(self.point_one.z, self.point_two.z),
+                    self.point_three.z,
+                ),
             ),
             Vec3::new(
-                f32::max(f32::max(self.point_one.x, self.point_two.x), self.point_three.x),
-                f32::max(f32::max(self.point_one.y, self.point_two.y), self.point_three.y),
-                f32::max(f32::max(self.point_one.z, self.point_two.z), self.point_three.z),
+                f32::max(
+                    f32::max(self.point_one.x, self.point_two.x),
+                    self.point_three.x,
+                ),
+                f32::max(
+                    f32::max(self.point_one.y, self.point_two.y),
+                    self.point_three.y,
+                ),
+                f32::max(
+                    f32::max(self.point_one.z, self.point_two.z),
+                    self.point_three.z,
+                ),
             ),
         ));
     }

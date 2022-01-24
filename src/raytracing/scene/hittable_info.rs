@@ -11,10 +11,9 @@ pub trait HittableInfo: HittableInfoClone {
     fn build(&self, material: MaterialRc) -> Box<dyn Hittable>;
 }
 
-
 impl<T> HittableInfoClone for T
-    where
-        T: HittableInfo + Clone + 'static,
+where
+    T: HittableInfo + Clone + 'static,
 {
     fn clone_box(&self) -> Box<dyn HittableInfo> {
         Box::new(self.clone())

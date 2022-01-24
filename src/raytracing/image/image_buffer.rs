@@ -62,8 +62,8 @@ pub trait ImageBuffer {
     }
 
     fn copy_to_with<F>(&self, other: &mut impl ImageBuffer, fun: F) -> Result<(), String>
-        where
-            F: Fn(&Vec3, &Vec3, &IVec2) -> Vec3,
+    where
+        F: Fn(&Vec3, &Vec3, &IVec2) -> Vec3,
     {
         let res = self.get_resolution();
         let other_res = self.get_resolution();
@@ -84,8 +84,8 @@ pub trait ImageBuffer {
     }
 
     fn scale_copy_to_with<F>(&self, other: &mut impl ImageBuffer, fun: F) -> Result<(), String>
-        where
-            F: Fn(&Vec3, &Vec3, &IVec2) -> Vec3,
+    where
+        F: Fn(&Vec3, &Vec3, &IVec2) -> Vec3,
     {
         let self_res = self.get_resolution();
         let self_res_f32 = Vec2::new(self_res.x as f32, self_res.y as f32);

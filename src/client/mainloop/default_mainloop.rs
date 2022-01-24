@@ -3,13 +3,13 @@ extern crate sdl2;
 use std::time::Duration;
 
 use nalgebra_glm::{IVec2, UVec2};
-use sdl2::{Sdl, VideoSubsystem};
 use sdl2::event::Event;
 use sdl2::image::InitFlag;
 use sdl2::keyboard::Keycode;
 use sdl2::pixels::{Color, PixelFormatEnum};
 use sdl2::render::{Texture, TextureAccess, TextureCreator, WindowCanvas};
 use sdl2::video::WindowContext;
+use sdl2::{Sdl, VideoSubsystem};
 
 use raytracing::image::u8_image_buffer::U8ImageBuffer;
 
@@ -18,8 +18,8 @@ use crate::mainloop::mainloop_trait::MainLoop;
 use crate::mainloop::states::mainloop_state::MainLoopState;
 
 pub struct DefaultMainLoop<T>
-    where
-        T: MainLoopState + Sized,
+where
+    T: MainLoopState + Sized,
 {
     sdl_context: Sdl,
     video_subsystem: VideoSubsystem,
@@ -35,8 +35,8 @@ pub struct DefaultMainLoop<T>
 }
 
 impl<T> DefaultMainLoop<T>
-    where
-        T: MainLoopState + Sized,
+where
+    T: MainLoopState + Sized,
 {
     pub fn new(
         resolution: UVec2,
@@ -83,8 +83,8 @@ impl<T> DefaultMainLoop<T>
 }
 
 impl<T> MainLoop for DefaultMainLoop<T>
-    where
-        T: MainLoopState + Sized,
+where
+    T: MainLoopState + Sized,
 {
     fn draw(&mut self) {
         self.texture
@@ -94,7 +94,7 @@ impl<T> MainLoop for DefaultMainLoop<T>
                     IVec2::new(self.resolution.x as i32, self.resolution.y as i32),
                     4,
                 )
-                    .unwrap();
+                .unwrap();
 
                 self.top_state.render(&mut buffer);
             })
@@ -170,5 +170,6 @@ impl<T> MainLoop for DefaultMainLoop<T>
                 ::std::thread::sleep(Duration::from_millis(millis as u64));
             }
         }
+        self.top_state.stop();
     }
 }

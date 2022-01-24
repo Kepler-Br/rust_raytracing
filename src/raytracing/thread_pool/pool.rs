@@ -1,4 +1,4 @@
-use std::sync::{Arc, mpsc, Mutex};
+use std::sync::{mpsc, Arc, Mutex};
 
 use crate::misc::scene::Scene;
 use crate::scene::scene_info::SceneInfo;
@@ -65,8 +65,8 @@ impl ThreadPool {
     }
 
     pub fn execute<F>(&self, f: F)
-        where
-            F: Fn() -> Scene + Send + 'static,
+    where
+        F: Fn() -> Scene + Send + 'static,
     {
         // let job = Box::new(f);
 
@@ -74,8 +74,8 @@ impl ThreadPool {
     }
 
     pub fn execute_multiple<F>(&self, f: F, times: usize)
-        where
-            F: Fn() -> Scene + Send + Clone + 'static,
+    where
+        F: Fn() -> Scene + Send + Clone + 'static,
     {
         // if times == 0 {
         //     return;

@@ -1,7 +1,9 @@
 use nalgebra_glm::IVec2;
 
+use raytracing::image::buffer_converter::BufferConverter;
 use raytracing::image::default_image_buffer::DefaultImageBuffer;
 use raytracing::image::image_buffer::ImageBuffer;
+use raytracing::image::ppm_converter::PpmConverter;
 use raytracing::scene::scene_info::SceneInfo;
 use raytracing::thread_pool::pool::ThreadPool;
 
@@ -13,33 +15,56 @@ pub struct RaytracingState {
     total_samples: u64,
     pool: ThreadPool,
     buffer: DefaultImageBuffer,
+    threads: usize,
+    result_path: Option<String>,
 }
 
 impl RaytracingState {
-    pub fn new(scene: SceneInfo, resolution: IVec2) -> Self {
+    pub fn new(
+        scene: SceneInfo,
+        resolution: IVec2,
+        threads: usize,
+        result_path: Option<&str>,
+    ) -> Self {
+        let path;
+
+        if let Some(some_path) = result_path {
+            path = Option::Some(some_path.to_string());
+        } else {
+            path = Option::None;
+        }
+
         return RaytracingState {
             scene_info: scene,
             resolution,
             total_samples: 0,
-            pool: ThreadPool::new(16),
+            pool: ThreadPool::new(threads),
             buffer: DefaultImageBuffer::new(resolution).unwrap(),
+            threads,
+            result_path: path,
         };
     }
 }
 
 impl MainLoopState for RaytracingState {
     fn start(&mut self) {
-        let clone_scene = self.scene_info.clone();
-        // self.pool.execute(move || )
-        // let resolution = IVec2::new(800, 600);
-        // let scene = ;
-        // let mut tracer = Tracer::new(
-        //     IVec2::new(800, 600),
-        //     cornell_box(IVec2::new(800, 600)).build(),
-        // );
-        // let aaaa =  cornell_box(IVec2::new(800, 600));
+        self.pool
+            .execute_scene(self.scene_info.clone(), self.threads);
+    }
 
-        self.pool.execute_scene(clone_scene.clone(), 16);
+    fn stop(&mut self) {
+        if let Some(path) = &self.result_path {
+            match PpmConverter::new(path) {
+                Ok(ppm) => {
+                    if let Err(err) =
+                        ppm.convert_with(&self.buffer, |color| color / self.total_samples as f32)
+                    {
+                        println!("Error writing result: {}", err);
+                    }
+                }
+                Err(err) => println!("Error writing result: {}", err),
+            }
+        }
     }
 
     fn update(&mut self, delta_time: f32) {
@@ -55,8 +80,8 @@ impl MainLoopState for RaytracingState {
     fn fixed_update(&mut self, delta_time: f32) {}
 
     fn render<T>(&mut self, buffer: &mut T)
-        where
-            T: ImageBuffer + Sized,
+    where
+        T: ImageBuffer + Sized,
     {
         let total_samples_div = 1.0 / self.total_samples as f32;
 

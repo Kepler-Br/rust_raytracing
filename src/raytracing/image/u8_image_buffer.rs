@@ -1,6 +1,7 @@
 use nalgebra_glm::{IVec2, Vec3};
 
 use crate::image::image_buffer::ImageBuffer;
+use crate::misc::utils::index_from_2d;
 
 pub struct U8ImageBuffer<'a> {
     resolution: IVec2,
@@ -56,8 +57,11 @@ impl<'a> U8ImageBuffer<'a> {
     }
 
     fn calc_index(&self, coord: &IVec2) -> usize {
-        return (coord.y as usize * self.resolution.x as usize + coord.x as usize)
-            * self.channels as usize;
+        return index_from_2d(
+            coord.x as usize,
+            coord.y as usize,
+            self.resolution.x as usize,
+        ) * self.channels as usize;
     }
 }
 

@@ -1,11 +1,11 @@
 use nalgebra_glm::UVec2;
 
-use crate::DefaultMainLoop;
 use crate::mainloop::states::mainloop_state::MainLoopState;
+use crate::DefaultMainLoop;
 
 pub struct DefaultMainLoopBuilder<T>
-    where
-        T: MainLoopState + Sized,
+where
+    T: MainLoopState + Sized,
 {
     locked_fps: bool,
     max_fps: u32,
@@ -15,8 +15,8 @@ pub struct DefaultMainLoopBuilder<T>
 }
 
 impl<T> DefaultMainLoopBuilder<T>
-    where
-        T: MainLoopState + Sized,
+where
+    T: MainLoopState + Sized,
 {
     pub fn new() -> Self {
         return DefaultMainLoopBuilder {
@@ -30,8 +30,8 @@ impl<T> DefaultMainLoopBuilder<T>
 }
 
 impl<T> DefaultMainLoopBuilder<T>
-    where
-        T: MainLoopState + Sized,
+where
+    T: MainLoopState + Sized,
 {
     pub fn locked_fps(mut self, is_locked: bool) -> Self {
         self.locked_fps = is_locked;
@@ -68,8 +68,7 @@ impl<T> DefaultMainLoopBuilder<T>
             self.resolution.unwrap_or_else(|| UVec2::new(800, 600)),
             self.locked_fps,
             self.max_fps,
-            &self.title
-                .unwrap_or_else(|| "SDL2 window".to_string()),
+            &self.title.unwrap_or_else(|| "SDL2 window".to_string()),
             self.top_state.expect("State is required"),
         );
     }

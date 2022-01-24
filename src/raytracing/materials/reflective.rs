@@ -24,7 +24,11 @@ impl Reflective {
     }
 
     pub fn new_rc(albedo: Vec3, reflectiveness: f32, rand_generator: RandGenRc) -> MaterialRc {
-        return Rc::new(RefCell::new(Box::new(Self::new(albedo, reflectiveness, rand_generator))));
+        return Rc::new(RefCell::new(Box::new(Self::new(
+            albedo,
+            reflectiveness,
+            rand_generator,
+        ))));
     }
 }
 

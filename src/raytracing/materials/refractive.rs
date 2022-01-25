@@ -33,10 +33,6 @@ impl Refractive {
 }
 
 fn refract(uv: &Vec3, n: &Vec3, etai_over_etat: f32) -> Vec3 {
-    // auto cos_theta = fmin(dot(-uv, n), 1.0);
-    // vec3 r_out_perp =  etai_over_etat * (uv + cos_theta*n);
-    // vec3 r_out_parallel = -sqrt(fabs(1.0 - r_out_perp.length_squared())) * n;
-    // return r_out_perp + r_out_parallel;
     let cos_theta = f32::min(Vec3::dot(&-uv, n), 1.0);
     let r_out_perp = etai_over_etat * (uv + cos_theta * n);
     let r_out_parallel = -f32::sqrt(f32::abs(1.0 - r_out_perp.magnitude_squared())) * n;
@@ -60,29 +56,21 @@ impl Material for Refractive {
         //
         // scattered = ray(rec.p, refracted);
 
-        let front_face = Vec3::dot(hit_record.get_normal(), ray.get_direction()) < 0.0;
-
-        let corrected_normal = if Vec3::dot(ray.get_direction(), hit_record.get_normal()) > 0.0 {
-            -*hit_record.get_normal()
-        } else {
-            *hit_record.get_normal()
-        };
-
-        let refraction_ratio = if front_face {
+        let refraction_ratio = if !hit_record.get_is_front_face() {
             1.0 / self.index_of_refraction
         } else {
             self.index_of_refraction
         };
 
         let unit_direction = ray.get_direction();
-        let refracted = refract(unit_direction, &corrected_normal, refraction_ratio);
+        let refracted = refract(unit_direction, hit_record.get_normal(), refraction_ratio);
 
         *attenuation = self.albedo;
 
         if RefCell::borrow_mut(&self.rand_generator).uniform() > 0.85 {
             *scattered = Ray::new(
                 *hit_record.get_point(),
-                reflect_vec(ray.get_direction(), &corrected_normal),
+                reflect_vec(ray.get_direction(), hit_record.get_normal()),
             );
         } else {
             *scattered = Ray::new(*hit_record.get_point(), refracted);

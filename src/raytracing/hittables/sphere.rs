@@ -1,3 +1,5 @@
+use std::ops::Div;
+
 use nalgebra_glm::Vec3;
 
 use crate::hittables::bounding::aabb::Aabb;
@@ -51,11 +53,19 @@ impl Hittable for Sphere {
                 return false;
             }
         }
+        let normal = (record.get_point() - self.center).div(self.radius);
+        let is_front = normal.dot(record.get_normal()) > 0.0;
+        let normal = if is_front {
+            -normal
+        } else {
+            normal
+        };
 
         record.set_distance(root);
         record.set_point(ray.get_at(record.get_distance()));
-        record.set_normal(((record.get_point() - self.center) / self.radius).normalize());
+        record.set_normal(normal);
         record.set_material(self.material.clone());
+        record.set_is_front_face(is_front);
 
         return true;
     }

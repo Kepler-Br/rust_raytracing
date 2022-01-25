@@ -35,7 +35,7 @@ impl Camera {
         let w = Vec3::new(mat.row(2)[0], mat.row(2)[1], mat.row(2)[2]);
 
         let focus_dist = 2.0;
-        let aperture = 0.02;
+        let aperture = 0.05;
         let horizontal = focus_dist * viewport_width * u;
         let vertical = focus_dist * viewport_height * v;
         let lower_left_corner = origin - horizontal / 2.0 - vertical / 2.0 - focus_dist * w;

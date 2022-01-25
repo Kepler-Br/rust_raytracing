@@ -5,23 +5,6 @@ use crate::misc::default_rand_gen::DefaultRandGen;
 use crate::scene::scene_info::SceneInfo;
 
 pub fn cornell_box(resolution: IVec2) -> SceneInfo {
-    // let rand = DefaultRandGen::new_rc();
-    // // Materials
-    // let emission = Emission::new_rc(blackbody_blender(3000.0), 10.0);
-    // let green = Lambertian::new_rc(Vec3::new(0.0, 1.0, 0.0), rand.clone());
-    // let red = Lambertian::new_rc(Vec3::new(1.0, 0.0, 0.0), rand.clone());
-    // let white = Lambertian::new_rc(Vec3::new(1.0, 1.0, 1.0), rand.clone());
-    //
-    // // Hittables
-    // let lantern =
-    //     XyRect::square_boxed(Vec3::new(0.0, 0.0, 1.0 - 0.01), 2.0 - 0.4, emission.clone());
-    // let back = XzRect::square_boxed(Vec3::new(0.0, -1.0, 0.0), 2.0, white.clone());
-    // let floor = XyRect::square_boxed(Vec3::new(0.0, 0.0, -1.0), 2.0, white.clone());
-    // let ceiling = XyRect::square_boxed(Vec3::new(0.0, 0.0, 1.0), 2.0, white.clone());
-    // let left = YzRect::square_boxed(Vec3::new(1.0, 0.0, 0.0), 2.0, green.clone());
-    // let right = YzRect::square_boxed(Vec3::new(-1.0, 0.0, 0.0), 2.0, red.clone());
-    // let sphere = Sphere::boxed(Vec3::new(0.0, 0.0, 0.0), 0.5, white.clone());
-
     return SceneInfo::new(DefaultRandGen::new_rc)
         .camera(
             Vec3::new(0.0, 2.4, 0.0),
@@ -67,24 +50,4 @@ pub fn cornell_box(resolution: IVec2) -> SceneInfo {
             Vec3::new(0.0, 0.0, 0.0 - (1.0 - 0.5)),
             0.5,
         );
-
-    // return SceneBuilder::new(rand.clone())
-    //     .material(green.clone())
-    //     .material(red.clone())
-    //     .material(white.clone())
-    //     .hittable(floor)
-    //     .hittable(ceiling)
-    //     .hittable(left)
-    //     .hittable(right)
-    //     .hittable(back)
-    //     .hittable(lantern)
-    //     .camera(Camera::new(
-    //         Vec3::new(0.0, 1.0, 0.0),
-    //         Vec3::new(0.0, 0.0, 0.0),
-    //         Vec3::new(-1.0, 0.0, 0.0),
-    //         80.0,
-    //         resolution.x as f32 / resolution.y as f32,
-    //         rand.clone(),
-    //     ))
-    //     .build();
 }
